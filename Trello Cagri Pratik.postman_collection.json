@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "9b44ff4f-ac65-4d01-b30e-c646a81cc2b3",
+		"name": "Trello Cagri Pratik",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Trello Board Olusturma",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Basarili\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"panoID\",response.id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"panoAdi\",\"UdemyTest\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{anaUrl}}/1/boards/?key={{key}}&token={{token}}&name={{pano",
+					"host": [
+						"{{anaUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{pano"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Liste olusturma",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"listId\", response.id);\r",
+							"\r",
+							"\r",
+							"pm.test(\"deger kontrolu\", function (){\r",
+							"    pm.expect(response.name).is.eql(pm.environment.get(\"ListeAdi\"));\r",
+							"    pm.expect(response.closed).to.be.false\r",
+							"})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ListeAdi\",\"trellotest\" + parseInt(Math.random()*1000);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{anaUrl}}/1/lists?key={{key}}&token={{token}}&name={{ListeAdi}}&idBoard={{panoID}}",
+					"host": [
+						"{{anaUrl}}"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{ListeAdi}}"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{panoID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "kart olusturma",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{anaUrl}}/1/cards?key={{key}}&token={{token}}&idList=60bb571ec9784a62be0bc3da",
+					"host": [
+						"{{anaUrl}}"
+					],
+					"path": [
+						"1",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "idList",
+							"value": "60bb571ec9784a62be0bc3da"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "kart guncelleme",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{anaUrl}}/1/cards/:id?key={{key}}&token={{token}}&name=1-Yeni güncelleme",
+					"host": [
+						"{{anaUrl}}"
+					],
+					"path": [
+						"1",
+						"cards",
+						":id"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "1-Yeni güncelleme"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{kartId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "kart silme",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{anaUrl}}/1/cards/:id?key={{key}}&token={{token}}",
+					"host": [
+						"{{anaUrl}}"
+					],
+					"path": [
+						"1",
+						"cards",
+						":id"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{kartId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
